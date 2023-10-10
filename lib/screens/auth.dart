@@ -1,3 +1,5 @@
+import 'package:auth_ui/widget/sign_in_with_social.dart';
+import 'package:auth_ui/widget/sign_in_with_text.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -139,7 +141,22 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: () {},
                   child: const Text('Log In'),
                 ),
-              )
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Forgotten your password ?',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SignInWithText(),
+              const SizedBox(
+                height: 40,
+              ),
+              const SignInWithSocial(),
             ],
           ),
         ),
