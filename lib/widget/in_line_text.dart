@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SignInWithText extends StatelessWidget {
-  const SignInWithText({super.key});
+class InLineText extends StatelessWidget {
+  const InLineText({required this.text, super.key});
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class SignInWithText extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        const Text('Or sign in with'),
+        Text(text),
         Expanded(
           child: Container(
             margin: const EdgeInsets.only(left: 8),

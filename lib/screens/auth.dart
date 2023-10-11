@@ -1,5 +1,5 @@
-import 'package:auth_ui/widget/sign_in_with_social.dart';
-import 'package:auth_ui/widget/sign_in_with_text.dart';
+import 'package:auth_ui/widget/social_icon.dart';
+import 'package:auth_ui/widget/in_line_text.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -152,11 +152,32 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              const SignInWithText(),
-              const SizedBox(
-                height: 40,
-              ),
-              const SignInWithSocial(),
+              const InLineText(text: 'Or sign in with'),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const SocialIcon(
+                        iconPath: 'assets/icons/microsoft.png'),
+                    iconSize: 30,
+                  ),
+                  const SizedBox(width: 30),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const SocialIcon(iconPath: 'assets/icons/google.png'),
+                    iconSize: 30,
+                  ),
+                  const SizedBox(width: 30),
+                  IconButton(
+                    onPressed: () {},
+                    icon:
+                        const SocialIcon(iconPath: 'assets/icons/facebook.png'),
+                    iconSize: 30,
+                  ),
+                ],
+              )
             ],
           ),
         ),
