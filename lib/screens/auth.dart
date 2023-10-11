@@ -130,7 +130,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromRGBO(65, 196, 133, 1),
+                      Theme.of(context).primaryColor,
                     ),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
@@ -153,7 +153,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const InLineText(text: 'Or sign in with'),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -163,13 +163,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         iconPath: 'assets/icons/microsoft.png'),
                     iconSize: 30,
                   ),
-                  const SizedBox(width: 30),
+                  const SizedBox(width: 10),
                   IconButton(
                     onPressed: () {},
                     icon: const SocialIcon(iconPath: 'assets/icons/google.png'),
                     iconSize: 30,
                   ),
-                  const SizedBox(width: 30),
+                  const SizedBox(width: 10),
                   IconButton(
                     onPressed: () {},
                     icon:
@@ -177,7 +177,21 @@ class _AuthScreenState extends State<AuthScreen> {
                     iconSize: 30,
                   ),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text("Don't have an account ?"),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Create an Account',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
