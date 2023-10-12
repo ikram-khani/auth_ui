@@ -1,4 +1,5 @@
 import 'package:auth_ui/screens/auth.dart';
+import 'package:auth_ui/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromRGBO(65, 196, 133, 1),
         useMaterial3: true,
       ),
-      home: const AuthScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

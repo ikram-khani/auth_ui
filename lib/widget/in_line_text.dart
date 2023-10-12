@@ -16,7 +16,10 @@ class InLineText extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        Text(text),
+        Text(
+          text,
+          style: const TextStyle(color: Colors.grey),
+        ),
         Expanded(
           child: Container(
             margin: const EdgeInsets.only(left: 8),

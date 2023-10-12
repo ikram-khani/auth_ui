@@ -6,6 +6,8 @@ class SocialIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    double imageSize = screenSize.width * 0.08;
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -17,8 +19,8 @@ class SocialIcon extends StatelessWidget {
       ),
       child: Image.asset(
         iconPath,
-        height: 30,
-        width: 30,
+        height: imageSize,
+        width: imageSize,
       ),
     );
   }

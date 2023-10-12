@@ -1,3 +1,4 @@
+import 'package:auth_ui/screens/sign_up.dart';
 import 'package:auth_ui/widget/social_icon.dart';
 import 'package:auth_ui/widget/in_line_text.dart';
 import 'package:flutter/material.dart';
@@ -152,42 +153,50 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              const InLineText(text: 'Or sign in with'),
+              const InLineText(
+                text: 'Or sign in with',
+              ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     onPressed: () {},
                     icon: const SocialIcon(
                         iconPath: 'assets/icons/microsoft.png'),
-                    iconSize: 30,
                   ),
                   const SizedBox(width: 10),
                   IconButton(
                     onPressed: () {},
                     icon: const SocialIcon(iconPath: 'assets/icons/google.png'),
-                    iconSize: 30,
                   ),
                   const SizedBox(width: 10),
                   IconButton(
                     onPressed: () {},
                     icon:
                         const SocialIcon(iconPath: 'assets/icons/facebook.png'),
-                    iconSize: 30,
                   ),
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text("Don't have an account ?"),
+              const Text(
+                "Don't have an account ?",
+                style: TextStyle(color: Colors.grey),
+              ),
               TextButton(
-                onPressed: () {},
-                child: Text(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
                   'Create an Account',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
