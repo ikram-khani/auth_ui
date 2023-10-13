@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -8,6 +9,22 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final DateFormat formatter = DateFormat.yMd();
+  final TextEditingController _dateController = TextEditingController();
+  Future<void> _selectDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2007),
+      firstDate: DateTime(1913),
+      lastDate: DateTime(2008),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _dateController.text = formatter.format(pickedDate);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +73,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         TextFormField(
-                          autofocus: true,
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             label: const Text('Name'),
@@ -64,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 20),
+                                horizontal: 30, vertical: 15),
                             hintText: 'Your Name',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
@@ -75,27 +91,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          autofocus: true,
+                          controller: _dateController,
+                          onTap: _selectDate,
                           decoration: InputDecoration(
+                            suffixIcon: const Padding(
+                              padding: EdgeInsets.only(right: 30.0),
+                              child: Icon(Icons.date_range_outlined),
+                            ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             label: const Text('Birthday'),
                             labelStyle: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 20),
-                            hintText: 'MM/DD/YY',
+                                horizontal: 30, vertical: 15),
+                            hintText: 'Please select your birthday',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
                           ),
-                          autocorrect: true,
-                          keyboardType: TextInputType.datetime,
-                          
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          autofocus: true,
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             label: const Text('Address'),
@@ -103,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 20),
+                                horizontal: 30, vertical: 15),
                             hintText: 'Enter your location',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
@@ -114,7 +131,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          autofocus: true,
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             label: const Text('Phone no'),
@@ -122,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 20),
+                                horizontal: 30, vertical: 15),
                             hintText: '+92----',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
