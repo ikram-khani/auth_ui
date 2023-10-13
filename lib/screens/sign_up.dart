@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
+import '../widget/in_line_text.dart';
+import '../widget/social_icon.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -31,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 60,
+          top: 40,
         ),
         child: Column(children: [
           Padding(
@@ -74,8 +77,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+                bottom: 30,
+              ),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -86,26 +93,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                label: const Text('Name'),
-                                labelStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                            Container(
+                              margin: const EdgeInsets.only(top: 5),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  label: const Text('Name'),
+                                  labelStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 15),
+                                  hintText: 'Your Name',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 15),
-                                hintText: 'Your Name',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
+                                autocorrect: true,
+                                keyboardType: TextInputType.name,
                               ),
-                              autocorrect: true,
-                              keyboardType: TextInputType.name,
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 25),
                             TextFormField(
+                              readOnly: true,
                               controller: _dateController,
                               onTap: _selectDate,
                               decoration: InputDecoration(
@@ -127,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 25),
                             TextFormField(
                               decoration: InputDecoration(
                                 floatingLabelBehavior:
@@ -146,9 +157,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               autocorrect: true,
                               keyboardType: TextInputType.streetAddress,
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 25),
                             IntlPhoneField(
                               decoration: InputDecoration(
+                                counterStyle: const TextStyle(
+                                    fontSize: 13, color: Colors.grey),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                                 label: const Text('Phone no'),
@@ -167,6 +180,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).primaryColor,
+                            ),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            textStyle: MaterialStateProperty.all(
+                              const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text('Next'),
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      const InLineText(
+                        text: 'Or sign in with',
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: const SocialIcon(
+                                  iconPath: 'assets/icons/microsoft.png'),
+                            ),
+                            const SizedBox(width: 10),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const SocialIcon(
+                                  iconPath: 'assets/icons/google.png'),
+                            ),
+                            const SizedBox(width: 10),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const SocialIcon(
+                                  iconPath: 'assets/icons/facebook.png'),
+                            ),
+                          ]),
                     ],
                   ),
                 ),
