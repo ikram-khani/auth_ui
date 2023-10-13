@@ -106,6 +106,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 30, vertical: 15),
                                   hintText: 'Your Name',
+                                  hintStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                   ),
@@ -133,6 +138,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 30, vertical: 15),
                                 hintText: 'Please select your birthday',
+                                hintStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
@@ -150,6 +160,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 30, vertical: 15),
                                 hintText: 'Enter your location',
+                                hintStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
