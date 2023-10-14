@@ -7,8 +7,13 @@ class SignUpScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 40),
         child: Column(
           children: [
             Column(
@@ -109,13 +114,7 @@ class SignUpScreen2 extends StatelessWidget {
                                 const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen2(),
-                                ),
-                              );
-                            },
+                            onPressed: () {},
                             child: const Text('Next'),
                           ),
                         ),
