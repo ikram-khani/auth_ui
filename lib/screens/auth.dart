@@ -14,6 +14,15 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _obscureText = true; //initialy the password text is obscure
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,3 +1,4 @@
+import 'package:auth_ui/screens/sign_up_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -56,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     "Create Account",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 20,
                     ),
                   ),
                 ),
@@ -212,7 +213,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpScreen2(),
+                              ),
+                            );
+                          },
                           child: const Text('Next'),
                         ),
                       ),
