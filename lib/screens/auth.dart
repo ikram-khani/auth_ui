@@ -12,6 +12,8 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _obscureText = true; //initialy the password text is obscure
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +69,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       TextFormField(
+                        controller: _emailController,
                         decoration: const InputDecoration(
                           hintText: 'Enter Your Email',
                           hintStyle: TextStyle(
@@ -94,6 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       TextFormField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           hintText: 'Enter Your Password',
                           hintStyle: const TextStyle(
@@ -193,6 +197,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       builder: (context) => const SignUpScreen(),
                     ),
                   );
+                  _emailController.clear();
+                  _passwordController.clear();
                 },
                 child: const Text(
                   'Create an Account',

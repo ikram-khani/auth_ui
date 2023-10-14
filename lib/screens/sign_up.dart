@@ -47,8 +47,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Navigator.of(context).pop();
                   },
                   child: const Icon(
-                    Icons.arrow_back_ios,
-                    size: 22,
+                    Icons.arrow_back,
+                    size: 25,
                   ),
                 ),
                 const Center(
