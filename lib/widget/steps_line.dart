@@ -49,17 +49,16 @@ class StepsLinePainter extends CustomPainter {
     final rRect = RRect.fromRectAndRadius(rect, const Radius.circular(30));
     canvas.drawRRect(rRect, rectPaint);
 
-    //draw the step circle
+    //draw the step rectangle
     final fillrectPaint = Paint()
       ..color = Colors.green
       ..style = PaintingStyle.fill;
-    for (int i = 0; i < 3; i++) {
-      final fillrect =
-          Rect.fromLTWH(0, 0, size.width / totalSteps * step, size.height);
-      final fillrRect =
-          RRect.fromRectAndRadius(fillrect, const Radius.circular(30));
-      canvas.drawRRect(fillrRect, fillrectPaint);
-    }
+
+    final fillrect =
+        Rect.fromLTWH(0, 0, size.width / totalSteps * step, size.height);
+    final fillrRect =
+        RRect.fromRectAndRadius(fillrect, const Radius.circular(30));
+    canvas.drawRRect(fillrRect, fillrectPaint);
   }
 
   @override
