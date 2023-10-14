@@ -83,7 +83,7 @@ class SignUpScreen4 extends StatelessWidget {
                         onChanged: (value) {},
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       const Text(
                         "Didn't Recieve OTP ?",
@@ -105,7 +105,11 @@ class SignUpScreen4 extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 30,
+                  right: 30,
+                ),
                 child: Center(
                   child: SingleChildScrollView(
                     keyboardDismissBehavior:

@@ -117,7 +117,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
                 child: Center(
                   child: SingleChildScrollView(
                     keyboardDismissBehavior:
