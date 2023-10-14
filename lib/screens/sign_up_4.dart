@@ -1,9 +1,10 @@
-import 'package:auth_ui/screens/sign_up_3.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:flutter/material.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 
-class SignUpScreen2 extends StatelessWidget {
-  const SignUpScreen2({super.key});
+class SignUpScreen4 extends StatelessWidget {
+  const SignUpScreen4({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class SignUpScreen2 extends StatelessWidget {
         child: Column(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
@@ -45,43 +46,58 @@ class SignUpScreen2 extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(
-                    left: 30,
-                    right: 30,
-                    top: 20,
+                    top: 25,
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        "What's your email?",
+                        "Verify OTP",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 23,
                         ),
                       ),
-                      TextFormField(
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Email Address',
-                          hintStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text(
+                        'Please enter the code we sent to your email',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      OTPTextField(
+                        keyboardType: TextInputType.number,
+                        fieldStyle: FieldStyle.box,
+                        outlineBorderRadius: 5,
+                        fieldWidth: 50,
+                        length: 4,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        style: const TextStyle(fontSize: 17),
+                        onChanged: (value) {},
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Text(
+                        "Didn't Recieve OTP ?",
+                        style: TextStyle(
                             color: Colors.grey,
-                          ),
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        autocorrect: false,
-                        textCapitalization: TextCapitalization.none,
-                        validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty ||
-                              !value.contains('@')) {
-                            return 'Please enter a valid email address.';
-                          }
-                          return null;
-                        },
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
                       ),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Resend Code',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))
                     ],
                   ),
                 )
@@ -99,7 +115,7 @@ class SignUpScreen2 extends StatelessWidget {
                       children: [
                         const StepsLine(
                           totalSteps: 3,
-                          step: 1,
+                          step: 3,
                         ),
                         SizedBox(
                           width: double.infinity,
@@ -115,14 +131,8 @@ class SignUpScreen2 extends StatelessWidget {
                                 const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen3(),
-                                ),
-                              );
-                            },
-                            child: const Text('Next'),
+                            onPressed: () {},
+                            child: const Text('Verify'),
                           ),
                         ),
                       ],
