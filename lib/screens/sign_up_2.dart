@@ -1,9 +1,39 @@
+import 'package:auth_ui/providers/user_data_provider.dart';
 import 'package:auth_ui/screens/sign_up_3.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SignUpScreen2 extends StatelessWidget {
+class SignUpScreen2 extends StatefulWidget {
   const SignUpScreen2({super.key});
+
+  @override
+  State<SignUpScreen2> createState() => _SignUpScreen2State();
+}
+
+class _SignUpScreen2State extends State<SignUpScreen2> {
+  final _fieldKey = GlobalKey<FormFieldState>();
+
+  var _enteredEmail = '';
+
+  void _submit() {
+    final userData = Provider.of<UserDataProvider>(context, listen: false);
+    final isValid = _fieldKey.currentState!.validate();
+
+    if (!isValid) {
+      //error
+      return;
+    }
+    _fieldKey.currentState!.save();
+
+    userData.saveEmail(_enteredEmail);
+    //going to the next scren
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SignUpScreen3(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +90,7 @@ class SignUpScreen2 extends StatelessWidget {
                         ),
                       ),
                       TextFormField(
+                        key: _fieldKey,
                         autofocus: true,
                         decoration: const InputDecoration(
                           hintText: 'Email Address',
@@ -81,6 +112,7 @@ class SignUpScreen2 extends StatelessWidget {
                           }
                           return null;
                         },
+                        onSaved: (newValue) => _enteredEmail = newValue!,
                       ),
                     ],
                   ),
@@ -115,13 +147,7 @@ class SignUpScreen2 extends StatelessWidget {
                                 const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen3(),
-                                ),
-                              );
-                            },
+                            onPressed: _submit,
                             child: const Text('Next'),
                           ),
                         ),

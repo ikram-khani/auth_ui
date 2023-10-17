@@ -1,6 +1,9 @@
 import 'package:auth_ui/screens/sign_up_4.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/user_data_provider.dart';
 
 class SignUpScreen3 extends StatefulWidget {
   const SignUpScreen3({super.key});
@@ -10,6 +13,36 @@ class SignUpScreen3 extends StatefulWidget {
 }
 
 class _SignUpScreen3State extends State<SignUpScreen3> {
+  final _fieldKey = GlobalKey<FormFieldState>();
+
+  var _enteredPassword = '';
+
+  void _submit() {
+    final userData = Provider.of<UserDataProvider>(context, listen: false);
+    final isValid = _fieldKey.currentState!.validate();
+
+    if (!isValid) {
+      //error message
+      return;
+    }
+    _fieldKey.currentState!.save();
+
+    userData.savePassword(_enteredPassword);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SignUpScreen4(),
+      ),
+    );
+
+    ///testing the data
+    print(userData.userData.name);
+    print(userData.userData.address);
+    print(userData.userData.dob);
+    print(userData.userData.phoneNumber);
+    print(userData.userData.email);
+    print(userData.userData.password);
+  }
+
   bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
@@ -71,6 +104,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextFormField(
+                          key: _fieldKey,
                           autofocus: true,
                           decoration: const InputDecoration(
                             hintText: 'Password',
@@ -89,6 +123,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                             }
                             return null;
                           },
+                          onSaved: (newValue) => _enteredPassword = newValue!,
                         ),
                       ),
                       Row(
@@ -143,13 +178,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                                 const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen4(),
-                                ),
-                              );
-                            },
+                            onPressed: _submit,
                             child: const Text('Sign Up'),
                           ),
                         ),

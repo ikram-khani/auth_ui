@@ -234,7 +234,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 30, vertical: 15),
-                                hintText: 'Enter your location',
+                                hintText: 'Enter your address',
                                 hintStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
