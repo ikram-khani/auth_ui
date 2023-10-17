@@ -1,7 +1,5 @@
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 
 class SignUpScreen4 extends StatelessWidget {
   const SignUpScreen4({super.key});
@@ -71,16 +69,6 @@ class SignUpScreen4 extends StatelessWidget {
                       ),
                       const SizedBox(
                         height: 15,
-                      ),
-                      OTPTextField(
-                        keyboardType: TextInputType.number,
-                        fieldStyle: FieldStyle.box,
-                        outlineBorderRadius: 5,
-                        fieldWidth: 50,
-                        length: 4,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        style: const TextStyle(fontSize: 17),
-                        onChanged: (value) {},
                       ),
                       const SizedBox(
                         height: 20,
