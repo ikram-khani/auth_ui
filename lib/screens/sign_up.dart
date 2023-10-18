@@ -12,6 +12,10 @@ import '../widget/social_icon.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
+  void clear() {
+    _SignUpScreenState()._clearForm();
+  }
+
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
@@ -30,6 +34,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _enteredAddress = '';
   var _enteredPhone = '';
   var _number = '';
+
+  _clearForm() {
+    _formKey.currentState!.reset();
+  }
 
   void _submit() {
     final isFormValid = _formKey.currentState!.validate();
