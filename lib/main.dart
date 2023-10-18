@@ -1,4 +1,3 @@
-import 'package:auth_ui/providers/forms_clear_provider.dart';
 import 'package:auth_ui/providers/user_data_provider.dart';
 import 'package:auth_ui/screens/auth.dart';
 
@@ -13,15 +12,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserDataProvider>(
-          create: (context) => UserDataProvider(),
-        ),
-        ChangeNotifierProvider<FormClearProvider>(
-          create: (context) => FormClearProvider(),
-        ),
-      ],
+    ChangeNotifierProvider(
+      create: (context) => UserDataProvider(),
       child: const MyApp(),
     ),
   );

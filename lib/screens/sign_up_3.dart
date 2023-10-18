@@ -1,5 +1,3 @@
-import 'package:auth_ui/providers/forms_clear_provider.dart';
-
 import 'package:auth_ui/screens/sign_up_4.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +19,6 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
 
   void _submit() {
     final userData = Provider.of<UserDataProvider>(context, listen: false);
-    final clearAllForms =
-        Provider.of<FormClearProvider>(context, listen: false).clearForm();
 
     final isValid = _fieldKey.currentState!.validate();
 
@@ -38,9 +34,6 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
         builder: (context) => const SignUpScreen4(),
       ),
     );
-
-    clearAllForms;
-    _fieldKey.currentState!.reset();
   }
 
   bool _showPassword = false;

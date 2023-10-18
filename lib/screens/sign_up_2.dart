@@ -7,11 +7,6 @@ import 'package:provider/provider.dart';
 class SignUpScreen2 extends StatefulWidget {
   const SignUpScreen2({super.key});
 
-//for passing the form clearing function to the last step of sign up
-  void clear() {
-    _SignUpScreen2State()._clearForm();
-  }
-
   @override
   State<SignUpScreen2> createState() => _SignUpScreen2State();
 }
@@ -20,11 +15,6 @@ class _SignUpScreen2State extends State<SignUpScreen2> {
   final _fieldKey = GlobalKey<FormFieldState>();
 
   var _enteredEmail = '';
-
-//it will be called after the signup occur in the last screen
-  _clearForm() {
-    _fieldKey.currentState!.reset();
-  }
 
   void _submit() {
     final userData = Provider.of<UserDataProvider>(context, listen: false);
