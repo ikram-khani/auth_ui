@@ -1,4 +1,4 @@
-import 'package:auth_ui/screens/sign_up_4.dart';
+import 'package:auth_ui/screens/email_verification.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
           _firebase.currentUser!.sendEmailVerification();
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const SignUpScreen4(),
+              builder: (context) => const EmailVerificationScreen(),
             ),
           );
 
