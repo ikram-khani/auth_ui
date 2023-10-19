@@ -1,4 +1,5 @@
 import 'package:auth_ui/widget/steps_line.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen4 extends StatelessWidget {
@@ -22,70 +23,68 @@ class SignUpScreen4 extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 26,
-                    right: 50,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: const Icon(Icons.arrow_back),
-                      ),
-                      const Expanded(
-                        child: Center(
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Log out',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    ],
+                        Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                            ),
+                            child: GestureDetector(
+                              onTap: () => FirebaseAuth.instance.signOut(),
+                              child: const Icon(Icons.logout_rounded),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(
                     top: 25,
                   ),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Verify OTP",
+                      Text(
+                        "Verify Email",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 8,
                       ),
-                      const Text(
-                        'Please enter the code we sent to your email',
+                      Text(
+                        'Please verify your email',
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 15,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        "Didn't Recieve OTP ?",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12),
+                      Center(
+                        child: Text(
+                          "We have sent a verification link to your email address",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
                       ),
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Resend Code',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))
                     ],
                   ),
                 )
