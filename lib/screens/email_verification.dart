@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auth_ui/screens/home.dart';
 import 'package:auth_ui/widget/steps_line.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   void initState() {
     super.initState();
 
+    firebaseAuth.currentUser!.sendEmailVerification();
+
     timer = Timer.periodic(
       const Duration(seconds: 3),
       (timer) => checkEmailVerified(),
@@ -28,18 +31,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   checkEmailVerified() async {
-    await FirebaseAuth.instance.currentUser!.reload();
+    //send email verification to the current user
+
+    await firebaseAuth.currentUser!.reload();
 
     setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      isEmailVerified = firebaseAuth.currentUser!.emailVerified;
     });
 
     if (isEmailVerified) {
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Email verified successfully \n Thank you!'),
         ),
       );
+      ScaffoldMessenger.of(context).clearSnackBars();
       timer?.cancel();
     }
   }
@@ -179,11 +186,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             ),
                             onPressed: () {
                               if (isEmailVerified) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomeScreen(),
+                                  ),
+                                );
                                 return;
                               }
                               try {
-                                FirebaseAuth.instance.currentUser
-                                    ?.sendEmailVerification();
+                                firebaseAuth.currentUser!
+                                    .sendEmailVerification();
                               } catch (e) {
                                 debugPrint('$e');
                               }

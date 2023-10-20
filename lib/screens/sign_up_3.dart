@@ -1,6 +1,5 @@
 import 'package:auth_ui/screens/email_verification.dart';
 import 'package:auth_ui/widget/steps_line.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,11 +16,9 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
   var _isUserCreating = false;
   final _fieldKey = GlobalKey<FormFieldState>();
 
-  final _firebase = FirebaseAuth.instance;
-
   var _enteredPassword = '';
 
-  void _submit() {
+  void _submit() async {
     final userData = Provider.of<UserDataProvider>(context, listen: false);
 
     final isValid = _fieldKey.currentState!.validate();
@@ -33,27 +30,38 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
     _fieldKey.currentState!.save();
     userData.savePassword(_enteredPassword);
 
-    _isUserCreating = true;
-
-    //if the createUserInFirebase provider return true value then move to the verification screen else null
+    //if the createUserInFirebase provider return the success value true then move to the verification screen else not move and show error message
     userData.createUserInFirebase(context).then(
-      (value) {
-        if (value == true) {
-          //send email verification to the current user
-          _firebase.currentUser!.sendEmailVerification();
-          Navigator.of(context).push(
+      (map) async {
+        if (map['success'] == true) {
+          setState(() {
+            _isUserCreating = true;
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Account created Successfully'),
+            ),
+          );
+          await Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => const EmailVerificationScreen(),
             ),
+            (Route route) => false,
           );
-
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Account created Successfully')));
+          return;
         }
+        setState(() {
+          _isUserCreating = false;
+        });
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(map['error'].message ?? 'Authentication failed.'),
+          ),
+        );
       },
     );
-
-    _isUserCreating = false;
   }
 
   bool _showPassword = false;
@@ -65,125 +73,121 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
         toolbarHeight: 0,
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: _isUserCreating
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 26,
+                    right: 50,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 26,
-                          right: 50,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () => Navigator.of(context).pop(),
-                              child: const Icon(Icons.arrow_back),
-                            ),
-                            const Expanded(
-                              child: Center(
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ],
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(Icons.arrow_back),
+                      ),
+                      const Expanded(
+                        child: Center(
+                          child: Text(
+                            'Sign up',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          left: 30,
-                          right: 30,
-                          top: 20,
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                    top: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                        child: Text(
+                          "Create a Password",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                "Create a Password",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: TextFormField(
+                          key: _fieldKey,
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: TextFormField(
-                                key: _fieldKey,
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Password',
-                                  hintStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                  focusedBorder: InputBorder.none,
-                                  border: InputBorder.none,
-                                ),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: !_showPassword ? true : false,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().length < 6) {
-                                    return 'Password must be atleast 6 character long.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (newValue) =>
-                                    _enteredPassword = newValue!,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Checkbox(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  value: _showPassword,
-                                  onChanged: (context) => setState(() {
-                                    _showPassword = !_showPassword;
-                                  }),
-                                ),
-                                const Expanded(
-                                  child: Text(
-                                    'Show Password',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
+                            focusedBorder: InputBorder.none,
+                            border: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: !_showPassword ? true : false,
+                          validator: (value) {
+                            if (value == null || value.trim().length < 6) {
+                              return 'Password must be atleast 6 character long.';
+                            }
+                            return null;
+                          },
+                          onSaved: (newValue) => _enteredPassword = newValue!,
                         ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            value: _showPassword,
+                            onChanged: (context) => setState(() {
+                              _showPassword = !_showPassword;
+                            }),
+                          ),
+                          const Expanded(
+                            child: Text(
+                              'Show Password',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
                       )
                     ],
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 30, right: 30),
-                      child: Center(
-                        child: SingleChildScrollView(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const StepsLine(
-                                totalSteps: 3,
-                                step: 2,
-                              ),
-                              SizedBox(
+                )
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+                child: Center(
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const StepsLine(
+                          totalSteps: 3,
+                          step: 2,
+                        ),
+                        _isUserCreating
+                            ? const Center(child: CircularProgressIndicator())
+                            : SizedBox(
                                 width: double.infinity,
                                 height: 50,
                                 child: ElevatedButton(
@@ -204,42 +208,39 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                                   child: const Text('Sign Up'),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Center(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text.rich(
-                                    TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              'By signing up, you agree to our '),
-                                      TextSpan(
-                                        text: 'Terms of services',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(text: ' and '),
-                                      TextSpan(
-                                        text: 'Privacy Policy',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ]),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
+                        const Center(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                    text: 'By signing up, you agree to our '),
+                                TextSpan(
+                                  text: 'Terms of services',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(text: ' and '),
+                                TextSpan(
+                                  text: 'Privacy Policy',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ]),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

@@ -32,11 +32,13 @@ class UserDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //used return type bool to make sure if it succeed return in try block return true, else in catch block return false
-  Future<bool> createUserInFirebase(BuildContext context) async {
+  //used return type make to make sure if it succeed return in try block return the success:true, else in catch block return success: false and also error:error to a scaffold in the widget from where it is called
+  Future<Map<String, dynamic>> createUserInFirebase(
+      BuildContext context) async {
     try {
       final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _userData.email!, password: _userData.password!);
+      await userCredentials.user!.updateDisplayName(userData.name);
 
       FirebaseFirestore.instance
           .collection('users')
@@ -50,17 +52,28 @@ class UserDataProvider with ChangeNotifier {
           'phone_number': _userData.phoneNumber,
         },
       );
-      return true;
+
+      return {
+        'success': true,
+      };
     } on FirebaseAuthException catch (error) {
-      // if (error.code == 'email-already-in-use') {
-      // }
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ?? 'Authentication failed.'),
-        ),
-      );
-      return false;
+      return {
+        'error': error,
+        'success': false,
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> signIn(String email, String password) async {
+    try {
+      await _firebase.signInWithEmailAndPassword(
+          email: email, password: password);
+      return {'success': true};
+    } on FirebaseAuthException catch (error) {
+      return {
+        'error': error,
+        'success': false,
+      };
     }
   }
 }
