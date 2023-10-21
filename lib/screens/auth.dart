@@ -1,4 +1,5 @@
 import 'package:auth_ui/screens/home.dart';
+import 'package:auth_ui/screens/reset_password.dart';
 import 'package:auth_ui/screens/sign_up.dart';
 import 'package:auth_ui/widget/social_icon.dart';
 import 'package:auth_ui/widget/in_line_text.dart';
@@ -207,7 +208,14 @@ class _AuthScreenState extends State<AuthScreen> {
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 12),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ResetPasswordScreen(),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Forgotten your password ?',
                               style: TextStyle(fontWeight: FontWeight.bold),
