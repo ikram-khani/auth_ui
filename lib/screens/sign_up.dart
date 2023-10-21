@@ -83,39 +83,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 0,
+        elevation: 10,
+        toolbarHeight: 35,
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 20,
+          top: 10,
         ),
         child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 20),
+          const Padding(
+            padding: EdgeInsets.only(left: 30, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    size: 25,
-                  ),
-                ),
-                const Center(
+                Center(
                   child: Text(
                     "Create Account",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 25,
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 50,
                   ),

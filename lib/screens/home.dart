@@ -9,10 +9,25 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebase = FirebaseAuth.instance;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        elevation: 10,
+        titleSpacing: -5,
+        leading: const Icon(
+          Icons.home,
+          color: Colors.green,
+        ),
         automaticallyImplyLeading: false,
-        title: const Text('Home Page'),
+        title: const Text(
+          'Home',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
         actions: [
+          const Text(
+            'Log out',
+            style:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.blueGrey),
+          ),
           IconButton(
             onPressed: () {
               firebase.signOut();
@@ -25,12 +40,20 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text(
-          'Hello ${firebase.currentUser!.displayName} \n Welcome Here',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.5,
+            image: AssetImage('assets/images/bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            'Hello ${firebase.currentUser!.displayName} \n Welcome Here!',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontWeight: FontWeight.w500, fontSize: 30, wordSpacing: 3),
           ),
         ),
       ),

@@ -39,38 +39,27 @@ class _SignUpScreen2State extends State<SignUpScreen2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 0,
+        toolbarHeight: 35,
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 40),
+        padding: const EdgeInsets.only(top: 30),
         child: Column(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 26,
-                    right: 50,
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 30,
+                    right: 30,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: const Icon(Icons.arrow_back),
-                      ),
-                      const Expanded(
-                        child: Center(
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: Center(
+                    child: Text(
+                      'Sign up',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                   ),
                 ),
                 Container(
