@@ -7,7 +7,8 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/in_line_text.dart';
-import '../widget/social_icon.dart';
+
+import '../widget/sign_in_with_google_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -116,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
               ],
@@ -304,31 +305,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(height: 25),
                       const InLineText(
-                        text: 'Or sign in with',
+                        text: 'OR',
                       ),
                       const SizedBox(height: 10),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/microsoft.png'),
-                            ),
-                            const SizedBox(width: 10),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/google.png'),
-                            ),
-                            const SizedBox(width: 10),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/facebook.png'),
-                            ),
-                          ]),
+                      const SignInWithGoogleButton(),
                     ],
                   ),
                 ),

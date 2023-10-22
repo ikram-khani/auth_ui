@@ -1,8 +1,9 @@
 import 'package:auth_ui/screens/home.dart';
 import 'package:auth_ui/screens/reset_password.dart';
 import 'package:auth_ui/screens/sign_up.dart';
-import 'package:auth_ui/widget/social_icon.dart';
+import 'package:auth_ui/widget/sign_in_with_google_button.dart';
 import 'package:auth_ui/widget/in_line_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _passwordController = TextEditingController();
   var isLoading = false;
 
-  void submit() {
+  void _submit() {
     var userData = Provider.of<UserDataProvider>(context, listen: false);
     userData.signIn(_emailController.text, _passwordController.text).then(
       (map) {
@@ -201,7 +202,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 const TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: submit,
+                            onPressed: _submit,
                             child: const Text('Log In'),
                           ),
                         ),
@@ -223,32 +224,10 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         const InLineText(
-                          text: 'Or sign in with',
+                          text: 'OR',
                         ),
                         const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/microsoft.png'),
-                            ),
-                            const SizedBox(width: 10),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/google.png'),
-                            ),
-                            const SizedBox(width: 10),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const SocialIcon(
-                                  iconPath: 'assets/icons/facebook.png'),
-                            ),
-                          ],
-                        ),
+                        const SignInWithGoogleButton(),
                         const SizedBox(
                           height: 10,
                         ),

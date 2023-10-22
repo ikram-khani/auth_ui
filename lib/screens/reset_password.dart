@@ -29,8 +29,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       QuerySnapshot querySnapshot =
           await userCollection.where('email', isEqualTo: _enteredEmail).get();
 
-      print(querySnapshot);
-
       if (querySnapshot.size > 0) {
         setState(() {
           isEmailRegistered = true;

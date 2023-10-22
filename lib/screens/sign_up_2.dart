@@ -30,7 +30,7 @@ class _SignUpScreen2State extends State<SignUpScreen2> {
     //going to the next scren
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SignUpScreen3(),
+        builder: (context) => const SignUpScreen3(),
       ),
     );
   }
