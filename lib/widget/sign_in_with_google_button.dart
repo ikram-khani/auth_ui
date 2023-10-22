@@ -27,8 +27,19 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
       GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
       //if sign in success then show home screen and show success message
       if (googleSignInAccount != null) {
-        //for saving the user email address and name to the database for getting in future
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Sign in successfully'),
+          ),
+        );
 
+//for saving the user email address and name to the database for getting in future
         // Check if a document with the same ID already exists
         final userDoc = await FirebaseFirestore.instance
             .collection('GoogleUsers')
@@ -46,18 +57,6 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
             },
           );
         }
-
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Sign in successfully'),
-          ),
-        );
       }
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
