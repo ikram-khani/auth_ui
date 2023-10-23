@@ -21,6 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   var isLoading = false;
+  var isNavigationLoading = false;
 
   void _submit() {
     var userData = Provider.of<UserDataProvider>(context, listen: false);
@@ -236,21 +237,31 @@ class _AuthScreenState extends State<AuthScreen> {
                           style: TextStyle(color: Colors.grey),
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
+                          onPressed: () async {
+                            setState(() {
+                              isNavigationLoading = true;
+                            });
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const SignUpScreen(),
                               ),
                             );
                             _emailController.clear();
                             _passwordController.clear();
+                            setState(() {
+                              isNavigationLoading = false;
+                            });
                           },
-                          child: const Text(
-                            'Create an Account',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: isNavigationLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const Text(
+                                  'Create an Account',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ],
                     ),

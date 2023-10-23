@@ -13,6 +13,8 @@ class SignInWithGoogleButton extends StatefulWidget {
 }
 
 class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
+  var _isGoogleSigning = false;
+
   Future<void> _signInWithGoogle() async {
     final List<String> scopes = <String>[
       'email',
@@ -20,6 +22,9 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
     ];
 
     try {
+      setState(() {
+        _isGoogleSigning = true;
+      });
       final GoogleSignIn googleSignIn = GoogleSignIn(
         scopes: scopes,
       );
@@ -39,7 +44,7 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
           ),
         );
 
-//for saving the user email address and name to the database for getting in future
+        //for saving the user email address and name to the database for getting in future
         // Check if a document with the same ID already exists
         final userDoc = await FirebaseFirestore.instance
             .collection('GoogleUsers')
@@ -59,6 +64,9 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
         }
       }
     } on FirebaseAuthException catch (error) {
+      setState(() {
+        _isGoogleSigning = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(error.message!),
@@ -71,41 +79,45 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return InkWell(
-        onTap: _signInWithGoogle,
-        child: Container(
-          height: screenSize.height / 18,
-          width: screenSize.width / 2,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Theme.of(context).primaryColor,
-          ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/icons/google.png'),
-                      fit: BoxFit.cover,
+    return _isGoogleSigning
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : InkWell(
+            onTap: _signInWithGoogle,
+            child: Container(
+              height: screenSize.height / 18,
+              width: screenSize.width / 2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/icons/google.png'),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                    shape: BoxShape.circle,
-                  ),
+                    const Text(
+                      'Sign in with google',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
                 ),
-                const Text(
-                  'Sign in with google',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+              ),
+            ));
   }
 }
