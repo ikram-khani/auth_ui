@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -19,19 +20,19 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserDataProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    GoogleSignIn googleSignIn = GoogleSignIn();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Auth',
@@ -53,15 +54,14 @@ class MyApp extends StatelessWidget {
                 : const EmailVerificationScreen();
           }
           return StreamBuilder(
-            stream: _googleSignIn.isSignedIn().asStream(),
-            builder: (context, snapshot) {
+            stream: googleSignIn.signInSilently().asStream(),
+            builder: (BuildContext context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const SplashScreen();
               }
-              if (snapshot.hasData == true) {
+              if (snapshot.hasData) {
                 return const HomeScreen();
               }
-
               return const AuthScreen();
             },
           );

@@ -21,17 +21,17 @@ class _SignInWithGoogleButtonState extends State<SignInWithGoogleButton> {
       'profile',
     ];
 
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: scopes,
+    );
+    //trying to sign in with google
+    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     try {
-      setState(() {
-        _isGoogleSigning = true;
-      });
-      final GoogleSignIn googleSignIn = GoogleSignIn(
-        scopes: scopes,
-      );
-      //trying to sign in with google
-      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
       //if sign in success then show home screen and show success message
       if (googleSignInAccount != null) {
+        setState(() {
+          _isGoogleSigning = true;
+        });
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const HomeScreen(),
