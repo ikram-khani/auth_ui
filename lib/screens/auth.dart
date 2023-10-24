@@ -24,6 +24,10 @@ class _AuthScreenState extends State<AuthScreen> {
   var isNavigationLoading = false;
 
   void _submit() {
+    setState(() {
+      isLoading == true;
+    });
+
     var userData = Provider.of<UserDataProvider>(context, listen: false);
     userData.signIn(_emailController.text, _passwordController.text).then(
       (map) {
@@ -33,9 +37,6 @@ class _AuthScreenState extends State<AuthScreen> {
               content: Text('Sign in Successfully!'),
             ),
           );
-          setState(() {
-            isLoading == true;
-          });
 
           Navigator.pushReplacement(
             context,
